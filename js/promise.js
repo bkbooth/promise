@@ -11,11 +11,13 @@ function Promise(deferred) {
 
     deferred(
         function resolve(value) {
+            // At the end of the chain, this._success will be null
             if (this._success) {
                 this._success(value);
             }
         }.bind(this),
         function reject(error) {
+            // At the end of the chain, this._failure will be null
             if (this._failure) {
                 this._failure(error);
             }
@@ -30,12 +32,29 @@ function Promise(deferred) {
  * @param {function} failure
  */
 Promise.prototype.then = function(success, failure) {
-    if (success) {
-        this._success = success;
-    }
-    if (failure) {
-        this._failure = failure;
-    }
+    return new Promise(function(resolve, reject) {
+        // Always define this._success() to forward success value if not handled locally
+        this._success = function(value) {
+            if (success) {
+                // Handle success value locally, then pass on new success value
+                resolve(success(value));
+            } else {
+                // No local success handler, pass on success value
+                resolve(value);
+            }
+        };
+
+        // Always define this._failure() to forward error if not handled locally
+        this._failure = function(error) {
+            if (failure) {
+                // Handle error locally, then pass on new success value
+                resolve(failure(error));
+            } else {
+                // No local failure handler, pass on error
+                reject(error);
+            }
+        };
+    }.bind(this));
 };
 
 /**
