@@ -17,11 +17,19 @@ function init() {
         setLoading(true);
         fetch(imgUrl, { responseType: 'blob' })
             .then(function(result) {
-                setLoading(false);
-                img.src = URL.createObjectURL(result);
-            }, function(error) {
-                setLoading(false);
+                console.info('Got an image, create Object URL');
+                return URL.createObjectURL(result);
+            })
+            .then(function(result) {
+                console.info('Got Object URL for image, apply to <img>.src');
+                img.src = result;
+            })
+            .catch(function(error) {
                 console.error('Got no image!', error);
+            })
+            .then(function() {
+                console.info('Cleaning up');
+                setLoading(false);
             });
     });
 }
