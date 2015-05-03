@@ -37,3 +37,12 @@ Promise.prototype.then = function(success, failure) {
         this._failure = failure;
     }
 };
+
+/**
+ * Catch is a shorthand for .then(undefined, function())
+ *
+ * @param {function} failure
+ */
+Promise.prototype.catch = function (failure) {
+    return this.then(void 0, failure);
+};
