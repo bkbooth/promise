@@ -36,8 +36,19 @@ Promise.prototype.then = function(success, failure) {
         // Always define this._success() to forward success value if not handled locally
         this._success = function(value) {
             if (success) {
-                // Handle success value locally, then pass on new success value
-                resolve(success(value));
+                if (value instanceof Promise) {
+                    // Resolve/reject this Promise after the passed in Promise is resolved/rejected
+                    value.then(function(result) {
+                        // Handle resulting value locally, then pass on new success value
+                        resolve(success(result));
+                    }, function(error) {
+                        // Pass on resulting error
+                        reject(error);
+                    });
+                } else {
+                    // Handle success value locally, then pass on new success value
+                    resolve(success(value));
+                }
             } else {
                 // No local success handler, pass on success value
                 resolve(value);
