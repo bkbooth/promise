@@ -26,3 +26,5 @@ Look at the branches named `step#` for the progression of getting to the final s
 Initial setup of demo, Promise library is empty stub
 * [step1](https://github.com/bkbooth/promise/tree/step1):
 Initial implementation, Promise library handles single .then() with success/failure handlers
+* [step2](https://github.com/bkbooth/promise/tree/step2):
+Promise library can handle chaining .then(), adds .catch() convenience method
