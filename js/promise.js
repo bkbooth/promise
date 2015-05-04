@@ -76,3 +76,32 @@ Promise.prototype.then = function(success, failure) {
 Promise.prototype.catch = function (failure) {
     return this.then(void 0, failure);
 };
+
+/**
+ * Resolve with the first of a set of promises to resolve/reject
+ *
+ * @param {Promise[]} promises
+ *
+ * @returns {Promise}
+ */
+Promise.race = function(promises) {
+    var settled = false; // Keep track if any Promises have been settled
+
+    return new Promise(function(resolve, reject) {
+        promises.forEach(function(promise) {
+            promise.then(function(result) {
+                if (!settled) {
+                    // First Promise to resolve/reject, resolve with result and set settled flag
+                    resolve(result);
+                    settled = true;
+                }
+            }, function(error) {
+                if (!settled) {
+                    // First Promise to resolve/reject, reject with error and set settled flag
+                    reject(error);
+                    settled = true;
+                }
+            });
+        });
+    });
+};
