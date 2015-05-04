@@ -32,3 +32,5 @@ Promise library can handle chaining .then(), adds .catch() convenience method
 Promise library can handle .then() handlers returning Promises
 * [step4](https://github.com/bkbooth/promise/tree/step4):
 Implement Promise.race() to resolve/reject with the first of a set of Promises to resolve/reject
+* [step5](https://github.com/bkbooth/promise/tree/step5):
+Implement Promise.all() to resolve a set of Promises at the same time
