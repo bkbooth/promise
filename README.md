@@ -28,3 +28,5 @@ Initial setup of demo, Promise library is empty stub
 Initial implementation, Promise library handles single .then() with success/failure handlers
 * [step2](https://github.com/bkbooth/promise/tree/step2):
 Promise library can handle chaining .then(), adds .catch() convenience method
+* [step3](https://github.com/bkbooth/promise/tree/step3):
+Promise library can handle .then() handlers returning Promises
