@@ -1,4 +1,5 @@
 var imgUrl = '//lorempixel.com/500/500/',
+    defaultImgUrl = 'img/fry-aaargh.gif',
     errorUrl = 'nothing-here',
     button,
     loading,
@@ -16,6 +17,11 @@ function init() {
     button.addEventListener('click', function clickListener() {
         setLoading(true);
         fetch(imgUrl, { responseType: 'blob' })
+            .catch(function(error) {
+                console.error('Got no image!', error);
+                console.info('Getting default image');
+                return fetch(defaultImgUrl, { responseType: 'blob' });
+            })
             .then(function(result) {
                 console.info('Got an image, create Object URL');
                 return URL.createObjectURL(result);
@@ -23,9 +29,6 @@ function init() {
             .then(function(result) {
                 console.info('Got Object URL for image, apply to <img>.src');
                 img.src = result;
-            })
-            .catch(function(error) {
-                console.error('Got no image!', error);
             })
             .then(function() {
                 console.info('Cleaning up');
