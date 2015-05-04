@@ -105,3 +105,32 @@ Promise.race = function(promises) {
         });
     });
 };
+
+/**
+ * Resolve with an array of a set of promises to resolve
+ * If any promise rejects, .all() rejects immediately
+ *
+ * @param {Promise[]} promises
+ *
+ * @returns {Promise}
+ */
+Promise.all = function(promises) {
+    var settled = 0,  // Keep track of the number of Promises settled
+        results = []; // Keep track of Promise resolutions
+
+    return new Promise(function(resolve, reject) {
+        promises.forEach(function(promise, index) {
+            promise.then(function (result) {
+                // Add resolution to the same index as the Promises array
+                results[index] = result;
+                // Increment number of settled Promises, resolve when all are resolved
+                if (++settled === promises.length) {
+                    resolve(results);
+                }
+            }, function (error) {
+                // Reject immediately if any Promises reject
+                reject(error);
+            });
+        });
+    });
+};
