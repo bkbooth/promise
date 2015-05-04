@@ -16,24 +16,23 @@ function init() {
 
     button.addEventListener('click', function clickListener() {
         setLoading(true);
-        fetch(imgUrl, { responseType: 'blob' })
-            .catch(function(error) {
-                console.error('Got no image!', error);
-                console.info('Getting default image');
-                return fetch(defaultImgUrl, { responseType: 'blob' });
-            })
-            .then(function(result) {
-                console.info('Got an image, create Object URL');
-                return URL.createObjectURL(result);
-            })
-            .then(function(result) {
-                console.info('Got Object URL for image, apply to <img>.src');
-                img.src = result;
-            })
-            .then(function() {
-                console.info('Cleaning up');
-                setLoading(false);
-            });
+        Promise.race([
+            fetch(imgUrl, { responseType: 'blob' }),
+            fetch(imgUrl, { responseType: 'blob' })
+        ]).catch(function(error) {
+            console.error('Got no image!', error);
+            console.info('Getting default image');
+            return fetch(defaultImgUrl, { responseType: 'blob' });
+        }).then(function(result) {
+            console.info('Got an image, create Object URL');
+            return URL.createObjectURL(result);
+        }).then(function(result) {
+            console.info('Got Object URL for image, apply to <img>.src');
+            img.src = result;
+        }).then(function() {
+            console.info('Cleaning up');
+            setLoading(false);
+        });
     });
 }
 
