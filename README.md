@@ -24,3 +24,5 @@ Look at the branches named `step#` for the progression of getting to the final s
 
 * [step0](https://github.com/bkbooth/promise/tree/step0):
 Initial setup of demo, Promise library is empty stub
+* [step1](https://github.com/bkbooth/promise/tree/step1):
+Initial implementation, Promise library handles single .then() with success/failure handlers
