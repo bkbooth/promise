@@ -1,6 +1,6 @@
 # Promise library with demo
 
-This repository is a companion to a [blog post](http://bkbooth.me/writing-a-javascript-promises-library/)
+This repository is a companion to a [blog post](http://benbooth.co/writing-a-javascript-promises-library/)
 that I wrote about implementing a Promise library. It contains the final source code for the
 library, a demonstration page, and branches to demonstrate the different steps of getting to the
 final solution.
